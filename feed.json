@@ -1,0 +1,51 @@
+---
+layout: null
+---
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "{{ site.title | xml_escape }}",
+    "home_page_url": "{{ site.url }}{{ site.baseurl }}/",
+    "feed_url": "{{ site.url }}{{ site.baseurl }}/feed.json",
+    "icon": "{{ site.url }}{{ site.baseurl }}/apple-touch-icon.png",
+    "favicon": "{{ site.url }}{{ site.baseurl }}/favicon.ico",
+    "expired": false,
+    "items": [
+    {% for post in site.posts limit:36 %}
+        {
+            "id": "{{ post.url | prepend: site.baseurl | prepend: site.url | sha1 }}",
+            "summary": "{{ post.seo_description }}",
+            "content_text": "<![CDATA[
+            {% if post.image.size > 1 %}
+                <p><img src="{{ post_image }}" alt="{{ post.title }}" title="{{ post.title }}" /></p>
+            {% endif %}
+            {% if post.content contains "<!-- more -->" %}
+              {{ post.content | split:"<!-- more -->" | first }}</p>
+              <p><a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}" title="Permalink to: {{ post.title }}" class="read-more">Read more &raquo;</a></p>
+            {% else %}
+              {{ post.content }}
+              {% if post.link.size > 1 %}
+              <p><a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}" title="Permalink to: {{ post.title }}" class="read-more">[Read on Hipster Pixel]</a></p>
+              {% endif %}
+            {% endif %} ]]>",
+            "url": "{{ post.url | prepend: site.baseurl | prepend: site.url }}",
+            {% if post.image.size > 1 %}
+            "image": "{{ post.image }}",
+            {% endif %}
+            {% if post.link.size > 1 %}
+            "external_url": "{{ post.link }}",
+            {% endif %}
+            {% if post.banner.size > 1 %}
+            "banner_image": "{{ post.banner }}",
+            {% endif %}
+            {% if post.tags.size > 1 %}
+            "tags": "{{ post.tags }}",
+            {% endif %}
+            "date_published": "{{ post.date | date_to_xmlschema }}",
+            "date_modified": "{{ post.date | date_to_xmlschema }}",
+            "author": {
+                "name": "{{ author.name }}"
+            }
+        },
+    {% endfor %}
+    ]
+}
