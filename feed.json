@@ -14,19 +14,8 @@ layout: null
         {
             "id": "{{ post.url | prepend: site.baseurl | prepend: site.url | sha1 }}",
             "summary": "{{ post.seo_description }}",
-            "content_text": "<![CDATA[
-            {% if post.image.size > 1 %}
-                <p><img src="{{ post_image }}" alt="{{ post.title }}" title="{{ post.title }}" /></p>
-            {% endif %}
-            {% if post.content contains "<!-- more -->" %}
-              {{ post.content | split:"<!-- more -->" | first }}</p>
-              <p><a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}" title="Permalink to: {{ post.title }}" class="read-more">Read more &raquo;</a></p>
-            {% else %}
-              {{ post.content }}
-              {% if post.link.size > 1 %}
-              <p><a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}" title="Permalink to: {{ post.title }}" class="read-more">[Read on Hipster Pixel]</a></p>
-              {% endif %}
-            {% endif %} ]]>",
+            "content_text": "{{ post.content | strip_html | strip_newlines }}"
+            "content_html": "{{ post.content | replace:'"', '\"' | strip_newlines }}",
             "url": "{{ post.url | prepend: site.baseurl | prepend: site.url }}",
             {% if post.image.size > 1 %}
             "image": "{{ post.image }}",
@@ -43,9 +32,9 @@ layout: null
             "date_published": "{{ post.date | date_to_xmlschema }}",
             "date_modified": "{{ post.date | date_to_xmlschema }}",
             "author": {
-                "name": "{{ author.name }}"
+                "name": "{{ post.author }}"
             }
-        },
+        }{% if forloop.last == false %},{% endif %}
     {% endfor %}
     ]
 }
