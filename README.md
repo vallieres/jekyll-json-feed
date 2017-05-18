@@ -8,9 +8,8 @@ Copy the `feed.json` file to the root directory of your Jekyll install.
 Add the following line to your `head.html` (or similar theme file where the `<head>` section of your site is defined.
 
 ```
-<link rel="alternate" title="My Feed" type="application/json" href="https://example.org/feed.json" />
+<link rel="alternate" title="{{ site.title }}" type="application/json" href="{{ "/feed.json" | prepend: site.baseurl | prepend: site.url }}" />
 ```
-(replace My Feed and example.org with your own values)
 
 If your server is not configured to serve JSON files, you might need to add this to your .htaccess file:
 
