@@ -12,7 +12,8 @@ layout: null
     "items": [
     {% for post in site.posts limit:36 %}
         {
-            "id": "{{ post.url | absolute_url | sha1 }}",
+            "id": "{{ post.url | prepend: site.baseurl | prepend: site.url | sha1 }}",
+            "title": "{{ post.title }}",
             "summary": "{{ post.seo_description }}",
             "content_text": "{{ post.content | strip_html | replace:'"', '\"' | strip_newlines }}",
             "content_html": "{{ post.content | replace:'"', '\"' | strip_newlines }}",
