@@ -33,7 +33,7 @@ layout: null
             {% if post.enclosure.size > 1 %}"attachments": [ {
               "url": "{{ post.enclosure }}",
               "mime_type": "{{ post.enclosure_type }}",
-              "size_in_bytes": "{{ post.enclosure_lenght }}"
+              "size_in_bytes": "{{ post.enclosure_length }}"
             },{% endif %}
             "date_published": "{{ post.date | date_to_xmlschema }}",
             "date_modified": "{{ post.date | date_to_xmlschema }}",
