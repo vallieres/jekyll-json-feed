@@ -1,7 +1,7 @@
 ---
 layout: null
 ---
-{
+{% capture base_tag %}<base href="{{ site.baseurl | prepend: site.url }}">{% endcapture %}{
     "version": "https://jsonfeed.org/version/1",
     "title": "{{ site.title | xml_escape }}",
     "home_page_url": "{{ "/" | absolute_url }}",
@@ -24,7 +24,7 @@ layout: null
             "title": {{ post.title | jsonify }},
             "summary": {{ post.seo_description | jsonify }},
             "content_text": {{ post.content | strip_html | strip_newlines | jsonify }},
-            "content_html": {{ post.content | strip_newlines | jsonify }},
+            "content_html": {{ post.content | prepend: base_tag | strip_newlines | jsonify }},
             "url": "{{ post.url | absolute_url }}",
             {% if post.image.size > 1 %}"image": {{ post.image | jsonify }},{% endif %}
             {% if post.link.size > 1 %}"external_url": "{{ post.link }}",{% endif %}
